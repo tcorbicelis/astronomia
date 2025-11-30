@@ -107,12 +107,14 @@
         border: 2px solid #4ea8de; /* destaque azul */
     }
 
-    /* ⭐ Barra de pesquisa fixa no canto superior direito */
+    /* ⭐ Barra de pesquisa fixa no canto superior direito com Stellarium */
     .search-container {
         position: fixed;
         top: 20px;
         right: 20px;
         z-index: 2;
+        display: flex;
+        align-items: center;
     }
 
     .search-container input[type="text"] {
@@ -121,6 +123,22 @@
         border: none;
         outline: none;
         font-size: 14px;
+    }
+
+    /* ⭐ Botão Stellarium - estilo transparente com texto branco */
+    .stellarium-btn {
+        background: transparent; /* sem cor de fundo */
+        color: #ffffff;          /* texto branco */
+        border: none;            /* sem borda */
+        padding: 8px 15px;
+        margin-right: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }   
+
+    .stellarium-btn:hover {
+        opacity: 0.7; /* leve efeito visual ao passar o mouse */
     }
 
     section {
@@ -229,8 +247,9 @@
     </div>
 </div>
 
-<!-- ⭐ Barra de pesquisa -->
+<!-- ⭐ Barra de pesquisa com botão Stellarium -->
 <div class="search-container">
+    <button class="stellarium-btn" onclick="window.open('https://stellarium-web.org/', '_blank')">Stellarium</button>
     <input type="text" placeholder="Pesquisar...">
 </div>
 
