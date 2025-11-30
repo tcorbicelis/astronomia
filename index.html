@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planetas do Sistema Solar</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #000000;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ⭐ Fundo de estrelas brilhantes */
+    .stars {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: black;
+        overflow: hidden;
+    }
+
+    .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: blink 1.5s infinite ease-in-out alternate;
+        opacity: 0.8;
+    }
+
+    @keyframes blink {
+        0%   { opacity: 0.1; }
+        50%  { opacity: 1; }
+        100% { opacity: 0.1; }
+    }
+
+    /* ⭐ Cometa animado */
+    .comet {
+        position: fixed;
+        top: -50px;
+        left: -100px;
+        width: 120px;
+        height: 2px;
+        background: linear-gradient(0deg, rgba(255,255,255,0), white);
+        border-radius: 50%;
+        z-index: -1;
+        transform: rotate(45deg);
+        animation: moveComet 5s linear infinite;
+    }
+
+    @keyframes moveComet {
+        0% {
+            transform: translate(0, 0) rotate(45deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(120vw, 120vh) rotate(45deg);
+            opacity: 0;
+        }
+    }
+
+    header {
+        background: #000000;
+        padding: 30px 20px;
+        text-align: center;
+        width: 100%;
+        z-index: 1;
+        position: relative;
+    }
+
+    h1 {
+        color: #4ea8de;
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-top: 5px;
+    }
+
+    /* ⭐ Ícone de perfil */
+    .profile-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+    }
+
+    .profile-container img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #4ea8de; /* destaque azul */
+    }
+
+    /* ⭐ Barra de pesquisa fixa no canto superior direito */
+    .search-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 2;
+    }
+
+    .search-container input[type="text"] {
+        padding: 8px 12px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+
+    section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .card {
+        background: #1a1d2ecc;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .card h2 {
+        margin-bottom: 15px;
+    }
+
+    button {
+        background: #4ea8de;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background: #2c7bbf;
+    }
+</style>
+</head>
+<body>
+
+<!-- ⭐ Fundo de estrelas -->
+<div class="stars"></div>
+
+<!-- ⭐ Cometa -->
+<div class="comet"></div>
+
+<!-- ⭐ Ícone de perfil -->
+<div class="profile-container">
+    <img src="avatar.png" alt="Perfil" />
+</div>
+
+<!-- ⭐ Barra de pesquisa -->
+<div class="search-container">
+    <input type="text" placeholder="Pesquisar planeta...">
+</div>
+
+<header>
+    <h1>Planetas do Sistema Solar</h1>
+    <p>Clique em um planeta para ver sua imagem</p>
+</header>
+
+<section>
+    <div class="card">
+        <h2>Mercúrio</h2>
+        <button onclick="location.href='mercurio.html'">Ver Mercúrio</button>
+    </div>
+    <div class="card">
+        <h2>Vênus</h2>
+        <button onclick="location.href='venus.html'">Ver Vênus</button>
+    </div>
+    <div class="card">
+        <h2>Terra</h2>
+        <button onclick="location.href='terra.html'">Ver Terra</button>
+    </div>
+    <div class="card">
+        <h2>Marte</h2>
+        <button onclick="location.href='marte.html'">Ver Marte</button>
+    </div>
+    <div class="card">
+        <h2>Júpiter</h2>
+        <button onclick="location.href='jupiter.html'">Ver Júpiter</button>
+    </div>
+    <div class="card">
+        <h2>Saturno</h2>
+        <button onclick="location.href='saturno.html'">Ver Saturno</button>
+    </div>
+    <div class="card">
+        <h2>Urano</h2>
+        <button onclick="location.href='urano.html'">Ver Urano</button>
+    </div>
+    <div class="card">
+        <h2>Netuno</h2>
+        <button onclick="location.href='netuno.html'">Ver Netuno</button>
+    </div>
+</section>
+
+<script>
+    const starContainer = document.querySelector('.stars');
+
+    // cria 200 estrelas
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        star.style.top = Math.random() * 100 + "%";
+        star.style.left = Math.random() * 100 + "%";
+
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + "px";
+        star.style.height = size + "px";
+
+        star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+
+        starContainer.appendChild(star);
+    }
+</script>
+
+</body>
+</html>
