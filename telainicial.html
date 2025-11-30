@@ -91,12 +91,13 @@
         margin-top: 5px;
     }
 
-    /* ⭐ Ícone de perfil */
+    /* ⭐ Ícone de perfil transformado em botão */
     .profile-container {
         position: fixed;
         top: 20px;
         left: 20px;
         z-index: 2;
+        cursor: pointer;
     }
 
     .profile-container img {
@@ -161,6 +162,49 @@
     button:hover {
         background: #2c7bbf;
     }
+
+    /* ⭐ Modal centralizado */
+    .modal {
+        display: none; /* inicialmente escondido */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .modal-content {
+        background: #1a1d2e;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        max-width: 80%;
+        text-align: center;
+        position: relative;
+    }
+
+    .modal-content input[type="text"] {
+        width: 90%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -171,14 +215,23 @@
 <!-- ⭐ Cometa -->
 <div class="comet"></div>
 
-<!-- ⭐ Ícone de perfil -->
-<div class="profile-container">
+<!-- ⭐ Ícone de perfil transformado em botão -->
+<div class="profile-container" id="profileBtn">
     <img src="avatar.png" alt="Perfil" />
+</div>
+
+<!-- ⭐ Modal -->
+<div class="modal" id="profileModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h3>Digite seu nome:</h3>
+        <input type="text" placeholder="Seu nome aqui...">
+    </div>
 </div>
 
 <!-- ⭐ Barra de pesquisa -->
 <div class="search-container">
-    <input type="text" placeholder="Pesquisar planeta...">
+    <input type="text" placeholder="Pesquisar...">
 </div>
 
 <header>
@@ -193,42 +246,41 @@
 <section>
     <div class="card">
         <h2>Mercúrio</h2>
-        <button onclick="location.href='mercurio.html'">Ver Mercúrio</button>
+        <button onclick="location.href='mercurio.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Vênus</h2>
-        <button onclick="location.href='venus.html'">Ver Vênus</button>
+        <button onclick="location.href='venus.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Terra</h2>
-        <button onclick="location.href='terra.html'">Ver Terra</button>
+        <button onclick="location.href='terra.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Marte</h2>
-        <button onclick="location.href='marte.html'">Ver Marte</button>
+        <button onclick="location.href='marte.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Júpiter</h2>
-        <button onclick="location.href='jupiter.html'">Ver Júpiter</button>
+        <button onclick="location.href='jupiter.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Saturno</h2>
-        <button onclick="location.href='saturno.html'">Ver Saturno</button>
+        <button onclick="location.href='saturno.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Urano</h2>
-        <button onclick="location.href='urano.html'">Ver Urano</button>
+        <button onclick="location.href='urano.html'">Ver</button>
     </div>
     <div class="card">
         <h2>Netuno</h2>
-        <button onclick="location.href='netuno.html'">Ver Netuno</button>
+        <button onclick="location.href='netuno.html'">Ver</button>
     </div>
 </section>
 
 <script>
     const starContainer = document.querySelector('.stars');
 
-    
     for (let i = 0; i < 200; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
@@ -244,6 +296,25 @@
 
         starContainer.appendChild(star);
     }
+
+    // ⭐ Modal functionality
+    const profileBtn = document.getElementById('profileBtn');
+    const modal = document.getElementById('profileModal');
+    const closeModal = document.getElementById('closeModal');
+
+    profileBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 </script>
 
 </body>
