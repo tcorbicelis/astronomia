@@ -277,6 +277,95 @@
         border-radius: 5px;
         cursor: pointer;
     }
+
+/* 🤖 Robô completo */
+    .robot {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        width: 110px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+/* CABEÇA */
+    .robot-head {
+        width: 70px;
+        height: 70px;
+        background: #1a1d2e;
+        border: 3px solid #4ea8de;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+/* OLHOS */
+    .eye {
+        width: 22px;
+        height: 22px;
+        background: #ffffff;
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pupil {
+        width: 12px;
+        height: 12px;
+        background: #4ea8de;
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        transition: 0.1s linear;
+    }
+
+/* CORPO */
+    .robot-body {
+        width: 55px;
+        height: 60px;
+        background: #1a1d2e;
+        border: 3px solid #4ea8de;
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+
+/* BRAÇOS */
+    .robot-arms {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .arm {
+        width: 18px;
+        height: 45px;
+        background: #1a1d2e;
+        border: 3px solid #4ea8de;
+        border-radius: 10px;
+        margin-top: -42px; /* alinha com o corpo */
+    }
+
+/* PERNAS */
+    .robot-legs {
+        width: 55px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .leg {
+        width: 18px;
+        height: 45px;
+        background: #1a1d2e;
+        border: 3px solid #4ea8de;
+        border-radius: 10px;
+    }
+
 </style>
 </head>
 <body>
@@ -372,6 +461,28 @@
         <h2>Netuno</h2>
         <button onclick="location.href='netuno.html'">Ver</button>
     </div>
+
+<!-- 🤖 Robô completo no canto inferior esquerdo -->
+    <div class="robot">
+        <div class="robot-head">
+            <div class="eye left-eye"><div class="pupil"></div></div>
+            <div class="eye right-eye"><div class="pupil"></div></div>
+        </div>
+
+        <div class="robot-body"></div>
+
+        <div class="robot-arms">
+            <div class="arm left-arm"></div>
+            <div class="arm right-arm"></div>
+        </div>
+
+        <div class="robot-legs">
+            <div class="leg left-leg"></div>
+            <div class="leg right-leg"></div>
+        </div>
+    </div>
+
+
 </section>
 
 <script>
@@ -437,6 +548,29 @@
         registerForm.classList.add('active');
         loginForm.classList.remove('active');
     });
+
+// 🤖 Olhos seguirem o mouse
+    const eyes = document.querySelectorAll('.eye');
+
+    document.addEventListener('mousemove', (event) => {
+        eyes.forEach(eye => {
+            const pupil = eye.querySelector('.pupil');
+            const rect = eye.getBoundingClientRect();
+
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+
+            const angle = Math.atan2(event.clientY - eyeY, event.clientX - eyeX);
+
+            const maxMove = 5;
+            const x = Math.cos(angle) * maxMove;
+            const y = Math.sin(angle) * maxMove;
+
+            pupil.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+
+
 </script>
 
 </body>
