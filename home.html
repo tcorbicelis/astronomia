@@ -278,16 +278,16 @@
         cursor: pointer;
     }
 
-/* 🤖 Robô completo */
+/* 😄 Robô fofo estilo cartoon */
     .robot {
         position: fixed;
-        bottom: 25px;
-        left: 25px;
-        width: 110px;
+        bottom: 20px;
+        left: 20px;
         z-index: 10;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100px;
     }
 
 /* CABEÇA */
@@ -296,14 +296,25 @@
         height: 70px;
         background: #1a1d2e;
         border: 3px solid #4ea8de;
-        border-radius: 12px;
+        border-radius: 15px;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 12px;
     }
 
-/* OLHOS */
+/* Antena */
+    .antenna {
+        position: absolute;
+        top: -12px;
+        width: 6px;
+        height: 12px;
+        background: #4ea8de;
+        border-radius: 3px;
+    }
+
+/* OLHOS / Pupilas */
     .eye {
         width: 22px;
         height: 22px;
@@ -316,7 +327,7 @@
     .pupil {
         width: 12px;
         height: 12px;
-        background: #4ea8de;
+        background: #15c0eb;
         border-radius: 50%;
         position: absolute;
         top: 5px;
@@ -326,12 +337,22 @@
 
 /* CORPO */
     .robot-body {
-        width: 55px;
-        height: 60px;
-        background: #1a1d2e;
+        width: 60px;
+        height: 55px;
+        background: #000000;
         border: 3px solid #4ea8de;
-        border-radius: 8px;
+        border-radius: 12px;
         margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body-inner {
+        width: 40px;
+        height: 35px;
+        background: #000; /* ou outra cor para detalhe */
+        border-radius: 6px;
     }
 
 /* BRAÇOS */
@@ -342,29 +363,30 @@
     }
 
     .arm {
-        width: 18px;
-        height: 45px;
+        width: 14px;
+        height: 40px;
         background: #1a1d2e;
-        border: 3px solid #4ea8de;
-        border-radius: 10px;
-        margin-top: -42px; /* alinha com o corpo */
-    }
+    border: 3px solid #4ea8de;
+  border-radius: 10px;
+  margin-top: -30px;
+}
 
 /* PERNAS */
-    .robot-legs {
-        width: 55px;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5px;
-    }
+.robot-legs {
+  width: 60px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
 
-    .leg {
-        width: 18px;
-        height: 45px;
-        background: #1a1d2e;
-        border: 3px solid #4ea8de;
-        border-radius: 10px;
-    }
+.leg {
+  width: 14px;
+  height: 40px;
+  background: #1a1d2e;
+  border: 3px solid #4ea8de;
+  border-radius: 10px;
+}
+
 
 </style>
 </head>
@@ -462,25 +484,25 @@
         <button onclick="location.href='netuno.html'">Ver</button>
     </div>
 
-<!-- 🤖 Robô completo no canto inferior esquerdo -->
-    <div class="robot">
-        <div class="robot-head">
-            <div class="eye left-eye"><div class="pupil"></div></div>
-            <div class="eye right-eye"><div class="pupil"></div></div>
-        </div>
-
-        <div class="robot-body"></div>
-
-        <div class="robot-arms">
-            <div class="arm left-arm"></div>
-            <div class="arm right-arm"></div>
-        </div>
-
-        <div class="robot-legs">
-            <div class="leg left-leg"></div>
-            <div class="leg right-leg"></div>
-        </div>
-    </div>
+<!-- 🤖 Robô fofo estilo cartoon no canto inferior esquerdo -->
+<div class="robot">
+  <div class="robot-head">
+    <div class="eye left-eye"><div class="pupil"></div></div>
+    <div class="eye right-eye"><div class="pupil"></div></div>
+    <div class="antenna"></div>
+  </div>
+  <div class="robot-body">
+    <div class="body-inner"></div>
+  </div>
+  <div class="robot-arms">
+    <div class="arm left-arm"></div>
+    <div class="arm right-arm"></div>
+  </div>
+  <div class="robot-legs">
+    <div class="leg left-leg"></div>
+    <div class="leg right-leg"></div>
+  </div>
+</div>
 
 
 </section>
