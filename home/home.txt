@@ -1,0 +1,2 @@
+No momento estou trabalhando na parte visual do site o Front-End. 
+Pretendo  levantar a estrutura do site primeiro para começar a trabalhar no Back-End.
