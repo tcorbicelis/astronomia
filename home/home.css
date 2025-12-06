@@ -1,6 +1,9 @@
+/* ===========================
+   ESTILOS GERAIS
+=========================== */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000000;
+    font-family: "Poppins", Arial, sans-serif;
+    background-color: #000;
     color: #ffffff;
     margin: 0;
     padding: 0;
@@ -10,204 +13,93 @@ body {
     align-items: center;
 }
 
-/* ⭐ Fundo de estrelas brilhantes */
+/* Transições globais */
+* {
+    transition: all 0.25s ease-out;
+}
+
+/* ===========================
+   FUNDO DE ESTRELAS
+=========================== */
 .stars {
     width: 100%;
     height: 100%;
     position: fixed;
     inset: 0;
     z-index: -2;
-    background: black;
+    background: radial-gradient(circle at bottom, #020617, #000);
     overflow: hidden;
 }
 
 .star {
     position: absolute;
-    width: 2px;
-    height: 2px;
     background: white;
     border-radius: 50%;
     animation: blink 1.5s infinite ease-in-out alternate;
-    opacity: 0.8;
+    filter: drop-shadow(0 0 4px white);
 }
 
 @keyframes blink {
-    0%   { opacity: 0.1; }
-    50%  { opacity: 1; }
-    100% { opacity: 0.1; }
+    0% { opacity: 0.1; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+    100% { opacity: 0.1; transform: scale(0.8); }
 }
 
-/* ⭐ Cometa animado */
+/* ===========================
+   COMETA
+=========================== */
 .comet {
     position: fixed;
     top: -50px;
     left: -100px;
-    width: 120px;
-    height: 2px;
-    background: linear-gradient(0deg, rgba(255,255,255,0), white);
+    width: 160px;
+    height: 3px;
+    background: linear-gradient(90deg, white, rgba(255,255,255,0));
     border-radius: 50%;
     z-index: -1;
     transform: rotate(45deg);
-    animation: moveComet 5s linear infinite;
+    animation: moveComet 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    filter: drop-shadow(0 0 8px white);
 }
 
 @keyframes moveComet {
-    0% {
-        transform: translate(0, 0) rotate(45deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(120vw, 120vh) rotate(45deg);
-        opacity: 0;
-    }
+    0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+    100% { transform: translate(160vw, 160vh) rotate(45deg); opacity: 0; }
 }
 
+/* ===========================
+   CABEÇALHO
+=========================== */
 header {
-    background: #000000;
-    padding: 30px 20px;
+    background: transparent;
+    padding: 40px 20px;
     text-align: center;
     width: 100%;
-    z-index: 1;
     position: relative;
 }
 
 h1 {
     color: #4ea8de;
-    display: inline-block;
-    padding: 12px 20px;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    font-size: 2.6em;
+    text-shadow: 0 0 8px #4ea8de;
+    letter-spacing: 1px;
+    transform: translateY(10px);
+    opacity: 0;
+    animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+    to { transform: translateY(0); opacity: 1; }
 }
 
 p {
-    margin-top: 5px;
+    opacity: 0;
+    animation: fadeUp 1.3s forwards;
 }
 
-/* ⭐ Ícone de perfil transformado em botão */
-.profile-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 2;
-    cursor: pointer;
-}
-
-.profile-container img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #4ea8de;
-}
-
-/* ⭐ Barra de pesquisa fixa no canto superior direito */
-.search-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-}
-
-.search-container input[type="text"] {
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-}
-
-/* ⭐ Botão Stellarium */
-.stellarium-btn {
-    background: transparent;
-    color: #ffffff;
-    border: none;
-    padding: 8px 15px;
-    margin-right: 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.stellarium-btn:hover {
-    opacity: 0.7;
-}
-
-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.card {
-    background: #1a1d2ecc;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-.card h2 {
-    margin-bottom: 15px;
-}
-
-button {
-    background: #4ea8de;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background: #2c7bbf;
-}
-
-/* ⭐ Modal centralizado */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-.modal-content {
-    background: #1a1d2e;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    max-width: 80%;
-    text-align: center;
-    position: relative;
-}
-
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    cursor: pointer;
-}
-
-/* ⭐ Estilo Login/Cadastro */
+/* ===========================
+   ÍCONE DE LOGIN / PERFIL
+=========================== */
 .auth-box {
     width: 360px;
     padding: 25px;
@@ -268,111 +160,154 @@ button:hover {
     cursor: pointer;
 }
 
-/* 🤖 Robô cartoon */
-.robot {
+.profile-container {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     left: 20px;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
+    z-index: 999;
+    cursor: pointer;
 }
 
-/* Cabeça */
-.robot-head {
-    width: 70px;
-    height: 70px;
-    background: #1a1d2e;
-    border: 3px solid #4ea8de;
-    border-radius: 15px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Antena */
-.antenna {
-    position: absolute;
-    top: -12px;
-    width: 6px;
-    height: 12px;
-    background: #4ea8de;
-    border-radius: 3px;
-}
-
-/* Olhos */
-.eye {
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
+.profile-container img {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    position: relative;
-    overflow: hidden;
+    border: 2px solid #4ea8de;
+    box-shadow: 0 0 10px #4ea8de;
 }
 
-.pupil {
-    width: 12px;
-    height: 12px;
-    background: #15c0eb;
-    border-radius: 50%;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    transition: 0.1s linear;
+.profile-container img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px #80d0ff;
 }
 
-/* Corpo */
-.robot-body {
-    width: 60px;
-    height: 55px;
-    background: #000000;
-    border: 3px solid #4ea8de;
-    border-radius: 12px;
-    margin-top: 5px;
+/* ===========================
+   BARRA DE PESQUISA + STELLARIUM
+=========================== */
+.search-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
-.body-inner {
-    width: 40px;
-    height: 35px;
-    background: #000;
+.search-container input[type="text"] {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(4px);
+    font-size: 14px;
+}
+
+.stellarium-btn {
+    padding: 10px 15px;
     border-radius: 6px;
+    background: rgba(78,168,222,0.2);
+    border: 1px solid #4ea8de;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
 }
 
-/* Braços */
-.robot-arms {
+.stellarium-btn:hover {
+    background: #4ea8de;
+    box-shadow: 0 0 10px #4ea8de;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+.card {
+    background: rgba(26, 29, 46, 0.8);
+    padding: 25px;
+    margin: 15px 0;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 420px;
+    text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+    box-shadow: 0 0 15px rgba(78, 168, 222, 0.2);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 20px rgba(78, 168, 222, 0.5);
+}
+
+button {
+    background: #4ea8de;
+    padding: 12px 20px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 15px #4ea8de;
+}
+
+/* ===========================
+   MODAL ORIGINAL (SEM ABAS)
+=========================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-.arm {
-    width: 14px;
-    height: 40px;
+.modal-content {
     background: #1a1d2e;
-    border: 3px solid #4ea8de;
+    padding: 25px;
     border-radius: 10px;
-    margin-top: -30px;
+    width: 350px;
+    text-align: center;
+    position: relative;
 }
 
-/* Pernas */
-.robot-legs {
-    width: 60px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 4px;
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
 }
 
-.leg {
-    width: 14px;
-    height: 40px;
-    background: #1a1d2e;
-    border: 3px solid #4ea8de;
-    border-radius: 10px;
+/* ===========================
+   ROBÔ
+=========================== */
+.robot-head, .robot-body, .arm, .leg {
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.robot:hover .robot-head {
+    transform: translateY(-5px);
+    box-shadow: 0 0 12px #4ea8de;
+}
+
+.robot:hover .arm {
+    transform: rotate(5deg);
 }
