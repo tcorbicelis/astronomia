@@ -295,19 +295,3 @@ button:hover {
     color: white;
     font-weight: bold;
 }
-
-/* ===========================
-   ROBÔ
-=========================== */
-.robot-head, .robot-body, .arm, .leg {
-    transition: transform .3s ease, box-shadow .3s ease;
-}
-
-.robot:hover .robot-head {
-    transform: translateY(-5px);
-    box-shadow: 0 0 12px #4ea8de;
-}
-
-.robot:hover .arm {
-    transform: rotate(5deg);
-}

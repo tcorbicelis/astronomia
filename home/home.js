@@ -62,25 +62,3 @@ registerTab.addEventListener('click', () => {
     registerForm.classList.add('active');
     loginForm.classList.remove('active');
 });
-
-
-// 🤖 Olhos do robô seguirem o mouse
-const eyes = document.querySelectorAll('.eye');
-
-document.addEventListener('mousemove', (event) => {
-    eyes.forEach(eye => {
-        const pupil = eye.querySelector('.pupil');
-        const rect = eye.getBoundingClientRect();
-
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-
-        const angle = Math.atan2(event.clientY - eyeY, event.clientX - eyeX);
-
-        const maxMove = 5;
-        const x = Math.cos(angle) * maxMove;
-        const y = Math.sin(angle) * maxMove;
-
-        pupil.style.transform = `translate(${x}px, ${y}px)`;
-    });
-});
