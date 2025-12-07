@@ -46,28 +46,6 @@ body {
 }
 
 /* ===========================
-   COMETA
-=========================== */
-.comet {
-    position: fixed;
-    top: -50px;
-    left: -100px;
-    width: 160px;
-    height: 3px;
-    background: linear-gradient(90deg, white, rgba(255,255,255,0));
-    border-radius: 50%;
-    z-index: -1;
-    transform: rotate(45deg);
-    animation: moveComet 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    filter: drop-shadow(0 0 8px white);
-}
-
-@keyframes moveComet {
-    0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
-    100% { transform: translate(160vw, 160vh) rotate(45deg); opacity: 0; }
-}
-
-/* ===========================
    CABEÇALHO
 =========================== */
 header {
