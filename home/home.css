@@ -305,4 +305,5 @@ button:hover {
 
 .close-modal:hover {
     background: rgba(255, 255, 255, 0.2);
+    transform: rotate(180deg);
 }

@@ -8,17 +8,19 @@
         width: 300px;
         border-radius: 10px;
         margin-top: 20px;
-    }
+}
 
-    button {
-        margin-top: 20px;
-        background: #4ea8de;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        color:white;
-    }
-    
-    button:hover {
-        background: #2c7bbf;
-    }
+button {
+    background: #4ea8de;
+    padding: 12px 20px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 15px #4ea8de;
+}
