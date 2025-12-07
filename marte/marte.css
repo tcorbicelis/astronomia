@@ -19,7 +19,6 @@ button {
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-
 }
 
 button:hover {

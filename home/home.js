@@ -31,12 +31,18 @@ const registerForm = document.getElementById('registerForm');
 
 // Abrir modal
 profileBtn.addEventListener('click', () => {
-    authModal.style.display = 'flex';
+    authModal.style.display = 'flex';  // deixa visível
+    setTimeout(() => {
+        authModal.classList.add('show'); // inicia a animação
+    }, 10); // pequeno delay para ativar a transição
 });
 
 // Fechar modal
 closeAuth.addEventListener('click', () => {
-    authModal.style.display = 'none';
+    authModal.classList.remove('show'); // anima para fechar
+    setTimeout(() => {
+        authModal.style.display = 'none'; // some após a animação
+    }, 350); // tempo igual ao da transição do CSS
 });
 
 // ⭐ Alternar entre Login e Cadastro

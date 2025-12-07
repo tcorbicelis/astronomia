@@ -243,7 +243,9 @@ button:hover {
    MODAL ORIGINAL (SEM ABAS)
 =========================== */
 .modal {
-    display: none;
+    display: flex;                 /* sempre flex */
+    opacity: 0;                    /* invisível */
+    pointer-events: none;          /* desativa clique */
     position: fixed;
     top: 0;
     left: 0;
@@ -253,7 +255,14 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 10;
+    transition: opacity 0.35s ease;
 }
+
+.modal.show {
+    opacity: 1;                    /* aparece */
+    pointer-events: all;           /* ativa clique */
+}
+
 
 .modal-content {
     background: #1a1d2e;
@@ -262,6 +271,12 @@ button:hover {
     width: 350px;
     text-align: center;
     position: relative;
+    transform: scale(0.85);                /* começa menor */
+    transition: transform 0.35s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);                   /* zoom suave */
 }
 
 .close-modal {
