@@ -39,13 +39,6 @@ closeAuth.addEventListener('click', () => {
     authModal.style.display = 'none';
 });
 
-// Fechar clicando fora do modal
-window.addEventListener('click', (event) => {
-    if (event.target === authModal) {
-        authModal.style.display = 'none';
-    }
-});
-
 // ⭐ Alternar entre Login e Cadastro
 loginTab.addEventListener('click', () => {
     loginTab.classList.add('active');
