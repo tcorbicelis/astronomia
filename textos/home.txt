@@ -1,3 +1,5 @@
-No momento estou trabalhando na parte visual do site, o Front-End. 
+> No momento estou trabalhando na parte visual do site, o Front-End. 
 Pretendo  levantar a estrutura do site primeiro para começar a trabalhar no Back-End.
-Tenho feito alguns ajustes na estrutura do código, como separar cada aba de site em pastas e desmenbrando o código.
+Tenho feito alguns ajustes na estrutura do código, como separar cada aba do site em pastas e desmenbrando o código.
+
+> Agora que as paginas atuais estão separadas em pastas e seus códigos separados, pretendo iniciar em ideias para cada aba.
