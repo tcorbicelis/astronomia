@@ -175,11 +175,32 @@ p {
 .search-container input[type="text"] {
     padding: 10px 14px;
     border-radius: 8px;
-    border: none;
-    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.12);
     color: white;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
     font-size: 14px;
+    width: 180px;
+
+    /* 🔥 Aqui é onde a transição moderna entra */
+    transition: 
+        width .4s cubic-bezier(0.4, 0, 0.2, 1),
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .4s ease;
+}
+
+
+.search-container input[type="text"]:focus {
+    width: 260px;       /* ← Aqui define o efeito */
+    background: rgba(255,255,255,0.18);
+    border-color: #4ea8de;
+
+    /* ✨ Glow moderno */
+    box-shadow:
+        0 0 8px rgba(78,168,222,0.6),
+        0 0 16px rgba(78,168,222,0.4),
+        inset 0 0 6px rgba(78,168,222,0.3);
 }
 
 .stellarium-btn {
