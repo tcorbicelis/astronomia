@@ -321,3 +321,78 @@ button:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: rotate(180deg);
 }
+
+/* ===========================
+   TERRA → SETA + LUA (LADO DIREITO)
+=========================== */
+
+.card-terra {
+    position: relative;
+}
+
+/* Container flutuante */
+.terra-extra {
+    position: absolute;
+    top: 50%;
+    right: -240px;              /* distância do card */
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover revela */
+.card-terra:hover .terra-extra {
+    opacity: 1;
+}
+
+/* Seta longa */
+.terra-seta {
+    position: relative;
+    width: 50px;                 /* ← comprimento da seta */
+    height: 2px;
+    background: #4ea8de;
+    box-shadow: 0 0 8px #4ea8de;
+}
+
+/* Ponta da seta */
+.terra-seta::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: -4px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid #4ea8de;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+/* Lua */
+.terra-lua {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,255,255,0.7);
+}
+
+/* Texto abaixo da Lua */
+.lua-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.lua-text {
+    font-size: 13px;
+    color: #cfe9ff;
+    text-align: center;
+    opacity: 0.85;
+    text-shadow: 0 0 6px rgba(78,168,222,0.6);
+    max-width: 120px;
+}
