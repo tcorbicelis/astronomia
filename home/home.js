@@ -61,3 +61,13 @@ registerTab.addEventListener('click', () => {
     registerForm.classList.add('active');
     loginForm.classList.remove('active');
 });
+
+    const form = document.getElementById('google-search-form');
+    const input = document.getElementById('google-search-input');
+
+    form.addEventListener('submit', function() {
+        // Limpa o campo com um pequeno atraso (50ms)
+        setTimeout(() => {
+            input.value = '';
+        }, 50);
+    });

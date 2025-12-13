@@ -63,7 +63,11 @@
 <!-- ⭐ Barra de pesquisa com botão Stellarium -->
 <div class="search-container">
     <button class="stellarium-btn" onclick="window.open('https://stellarium-web.org/', '_blank')">Stellarium</button>
-    <input type="text" placeholder="Pesquisar...">
+    <!-- Formulário de pesquisa do Google -->
+    <form id="google-search-form" action="https://www.google.com/search" method="get" target="_blank" style="display:inline;">
+        <input type="text" name="q" id="google-search-input" placeholder="Pesquisar...">
+        <button type="submit">Buscar</button>
+    </form>
 </div>
 
 <header>
