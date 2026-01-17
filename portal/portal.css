@@ -71,12 +71,14 @@ button:hover {
   position: absolute;
   bottom: 40px;
   left: 50%;
-  width: 40px;
-  height: 60px;
-  background: linear-gradient(to top, #4ea8de, #ffffff);
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  width: 60px;  /* largura da nave */
+  height: 60px; /* altura da nave */
   transform: translateX(-50%);
   pointer-events: auto;
+  background-image: url(https://leo1905.itch.io/projeto-nave);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* mantém proporção */
 }
 
 .bullet {
