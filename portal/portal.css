@@ -71,14 +71,14 @@ button:hover {
   position: absolute;
   bottom: 40px;
   left: 50%;
-  width: 60px;  /* largura da nave */
-  height: 60px; /* altura da nave */
+  width: 60px;       /* ajuste conforme o tamanho da imagem */
+  height: 60px;      /* ajuste conforme o tamanho da imagem */
   transform: translateX(-50%);
   pointer-events: auto;
-  background-image: url(https://leo1905.itch.io/projeto-nave);
+  background-image: url('img/nave.png'); /* caminho da sua imagem */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain; /* mantém proporção */
+  background-size: contain; /* mantém a proporção */
 }
 
 .bullet {

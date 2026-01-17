@@ -24,9 +24,12 @@ game.className = 'game';
 document.body.appendChild(game);
 
 // 🚀 Nave
-const ship = document.querySelector('.ship') || (() => {
-  const s = document.createElement('div');
+const ship = (() => {
+  const s = document.createElement('img');
+  s.src = 'img/nave.png'; // caminho da imagem
   s.className = 'ship';
+  s.style.position = 'absolute';
+  s.style.bottom = '20px';
   game.appendChild(s);
   return s;
 })();
@@ -62,7 +65,10 @@ function createExplosion(x, y) {
 
 // 🖱️ Movimento da nave
 document.addEventListener('mousemove', (e) => {
-  ship.style.left = `${e.clientX}px`;
+  const shipWidth = ship.offsetWidth;
+  let left = e.clientX - shipWidth / 2;
+  left = Math.max(0, Math.min(left, window.innerWidth - shipWidth));
+  ship.style.left = `${left}px`;
 });
 
 // 🔫 Disparo da nave
@@ -74,7 +80,7 @@ document.addEventListener('click', () => {
   const bullet = document.createElement('div');
   bullet.className = 'bullet';
   const rect = ship.getBoundingClientRect();
-  bullet.style.left = rect.left + rect.width / 2 + 'px';
+  bullet.style.left = rect.left + rect.width / 2 - 2 + 'px'; // centraliza o tiro
   bullet.style.top = rect.top + 'px';
   game.appendChild(bullet);
 
@@ -111,9 +117,8 @@ document.addEventListener('click', () => {
 setInterval(() => {
   const meteor = document.createElement('div');
   meteor.className = 'meteor';
-  meteor.style.left = Math.random() * window.innerWidth + 'px';
+  meteor.style.left = Math.random() * (window.innerWidth - 40) + 'px';
   meteor.style.top = '-40px';
-  meteor.life = 1;
   game.appendChild(meteor);
 
   const speed = Math.random() * 3 + 2;
