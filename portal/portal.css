@@ -75,7 +75,7 @@ button:hover {
   height: 60px;      /* ajuste conforme o tamanho da imagem */
   transform: translateX(-50%);
   pointer-events: auto;
-  background-image: url('img/nave.png'); /* caminho da sua imagem */
+  background-image: url('./img/nave.png'); /* caminho da sua imagem */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain; /* mantém a proporção */
