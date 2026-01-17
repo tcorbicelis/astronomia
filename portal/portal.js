@@ -30,6 +30,8 @@ const ship = (() => {
   s.className = 'ship';
   s.style.position = 'absolute';
   s.style.bottom = '20px';
+  s.style.left = '50%';
+  s.style.transform = 'translateX(-50%)';
   game.appendChild(s);
   return s;
 })();
@@ -63,24 +65,40 @@ function createExplosion(x, y) {
   setTimeout(() => explosion.remove(), 400);
 }
 
-// 🖱️ Movimento da nave
-document.addEventListener('mousemove', (e) => {
-  const shipWidth = ship.offsetWidth;
-  let left = e.clientX - shipWidth / 2;
-  left = Math.max(0, Math.min(left, window.innerWidth - shipWidth));
-  ship.style.left = `${left}px`;
+// 🎮 Controle da nave pelo teclado
+const keys = {
+  ArrowLeft: false,
+  ArrowRight: false,
+  ArrowUp: false,
+  ArrowDown: false,
+  Space: false
+};
+
+document.addEventListener('keydown', (e) => {
+  if (e.code in keys) {
+    keys[e.code] = true;
+    e.preventDefault(); // evita scroll da página
+  }
 });
 
-// 🔫 Disparo da nave
-document.addEventListener('click', () => {
-  // 🔊 Som do tiro
+document.addEventListener('keyup', (e) => {
+  if (e.code in keys) keys[e.code] = false;
+});
+
+// 🔫 Função de disparo
+let canShoot = true; // controla intervalo de tiros
+
+function shootBullet() {
+  if (!canShoot) return;
+  canShoot = false;
+
   shootSound.currentTime = 0;
   shootSound.play();
 
   const bullet = document.createElement('div');
   bullet.className = 'bullet';
   const rect = ship.getBoundingClientRect();
-  bullet.style.left = rect.left + rect.width / 2 - 2 + 'px'; // centraliza o tiro
+  bullet.style.left = rect.left + rect.width / 2 - 2 + 'px';
   bullet.style.top = rect.top + 'px';
   game.appendChild(bullet);
 
@@ -96,22 +114,49 @@ document.addEventListener('click', () => {
         bullet.remove();
         clearInterval(interval);
 
-        // 💥 Explosão
         const r = meteor.getBoundingClientRect();
         createExplosion(r.left + r.width / 2, r.top + r.height / 2);
         explosionSound.currentTime = 0;
         explosionSound.play();
 
-        // ✅ Pontuação
         score += 10;
         scoreBoard.innerText = `Pontos: ${score}`;
 
-        // 🪨 Meteoro morre
         meteor.remove();
       }
     });
   }, 16);
-});
+
+  setTimeout(() => { canShoot = true; }, 250); // 4 tiros por segundo
+}
+
+// 🔄 Atualiza posição da nave e atira
+function updateShip() {
+  const speed = 7;
+  const shipWidth = ship.offsetWidth;
+  const shipHeight = ship.offsetHeight;
+
+  let left = ship.offsetLeft;
+  let top = ship.offsetTop;
+
+  if (keys.ArrowLeft) left -= speed;
+  if (keys.ArrowRight) left += speed;
+  if (keys.ArrowUp) top -= speed;
+  if (keys.ArrowDown) top += speed;
+
+  // Limites da tela
+  left = Math.max(0, Math.min(left, window.innerWidth - shipWidth));
+  top = Math.max(0, Math.min(top, window.innerHeight - shipHeight));
+
+  ship.style.left = left + 'px';
+  ship.style.top = top + 'px';
+
+  if (keys.Space) shootBullet();
+
+  requestAnimationFrame(updateShip);
+}
+
+updateShip();
 
 // ☄️ Criar meteoros
 setInterval(() => {
