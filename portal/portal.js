@@ -43,6 +43,23 @@ scoreBoard.className = 'score';
 scoreBoard.innerText = 'Pontos: 0';
 document.body.appendChild(scoreBoard);
 
+// ⏱️ Cronômetro
+let startTime = Date.now();
+const timerBoard = document.createElement('div');
+timerBoard.className = 'score'; // reutilizando a classe, mas podemos posicionar diferente
+timerBoard.style.top = '50px';
+timerBoard.style.right = '20px';
+timerBoard.innerText = 'Tempo: 0s';
+document.body.appendChild(timerBoard);
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000); // tempo em segundos
+  timerBoard.innerText = `Tempo: ${elapsed}s`;
+  requestAnimationFrame(updateTimer);
+}
+
+updateTimer(); // iniciar o cronômetro
+
 // 📌 Função de colisão
 function isColliding(a, b) {
   const r1 = a.getBoundingClientRect();
