@@ -38,62 +38,6 @@
       100% { opacity: 0.3; }
     }
 
-/* Galáxia espiral */
-.galaxy {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  animation: rotateGalaxy 30s linear infinite;
-}
-
-/* Núcleo da galáxia */
-.galaxy::before {
-  content: "";
-  position: absolute;
-  inset: 35%;
-  background: radial-gradient(circle, #ffffff 0%, #ffe066 40%, transparent 70%);
-  border-radius: 50%;
-  box-shadow: 0 0 25px 10px rgba(255, 240, 180, 0.8);
-}
-
-/* Braços espirais */
-.galaxy span {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: repeating-conic-gradient(
-    from 0deg,
-    rgba(120, 180, 255, 0.7) 0deg,
-    rgba(120, 180, 255, 0.2) 20deg,
-    transparent 40deg
-  );
-  mask: radial-gradient(circle, transparent 30%, black 70%);
-  animation: swirl 12s linear infinite;
-}
-
-.galaxy span:nth-child(2) {
-  transform: rotate(60deg);
-  animation-duration: 16s;
-}
-
-.galaxy span:nth-child(3) {
-  transform: rotate(120deg);
-  animation-duration: 20s;
-}
-
-/* Animações */
-@keyframes rotateGalaxy {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes swirl {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-
-
 button {
     position: fixed;
     top: 20px;
@@ -116,97 +60,82 @@ button:hover {
     box-shadow: 0 0 10px #4ea8de;
 }
 
-.galaxy-wrapper {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 800px;
-}
-
-.core {
+.game {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  z-index: 5;
-
-  background: radial-gradient(
-    circle at 30% 30%,
-    #ffffff 0%,
-    #fff2b0 20%,
-    #ffcc55 45%,
-    #d49b2a 70%,
-    #8a5a00 100%
-  );
-
-  box-shadow:
-    inset -10px -15px 25px rgba(0, 0, 0, 0.6),
-    inset 6px 6px 15px rgba(255, 255, 255, 0.4),
-    0 0 25px 12px rgba(255, 220, 120, 0.7);
-
-  transform: translateZ(10px);
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.galaxy-3d {
+.ship {
   position: absolute;
-  width: 220px;
-  height: 220px;
-  transform-style: preserve-3d;
-  animation: galaxyRotate 40s linear infinite;
+  bottom: 40px;
+  left: 50%;
+  width: 40px;
+  height: 60px;
+  background: linear-gradient(to top, #4ea8de, #ffffff);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform: translateX(-50%);
+  pointer-events: auto;
 }
 
-/* Braços */
-.arm {
+.bullet {
   position: absolute;
-  inset: 0;
+  width: 4px;
+  height: 12px;
+  background: #ffeb3b;
+  box-shadow: 0 0 10px #ffeb3b;
+}
+
+.meteor {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #aaa, #555, #222);
   border-radius: 50%;
-  background: repeating-conic-gradient(
-    from 0deg,
-    rgba(120, 180, 255, 0.7) 0deg,
-    rgba(120, 180, 255, 0.2) 18deg,
-    transparent 36deg
+}
+
+.explosion {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ffe066 25%,
+    #ff9933 45%,
+    #ff3300 65%,
+    transparent 70%
   );
-  mask: radial-gradient(circle, transparent 30%, black 75%);
-  transform-style: preserve-3d;
+
+  animation: explode 0.4s ease-out forwards;
 }
 
-/* Camadas de profundidade */
-.arm1 {
-  transform: rotateX(55deg) rotateZ(0deg) translateZ(-30px);
-  animation: swirl1 14s linear infinite;
+@keyframes explode {
+  from {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
 }
 
-.arm2 {
-  transform: rotateX(55deg) rotateZ(60deg) translateZ(0px);
-  animation: swirl2 18s linear infinite reverse;
+.score {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  text-shadow: 0 0 8px #4ea8de;
+  z-index: 10;
 }
 
-.arm3 {
-  transform: rotateX(55deg) rotateZ(120deg) translateZ(30px);
-  animation: swirl3 22s linear infinite;
-}
-
-/* Animações */
-@keyframes galaxyRotate {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-@keyframes swirl1 {
-  from { transform: rotateX(55deg) rotateZ(0deg) translateZ(-30px); }
-  to { transform: rotateX(55deg) rotateZ(360deg) translateZ(-30px); }
-}
-
-@keyframes swirl2 {
-  from { transform: rotateX(55deg) rotateZ(60deg) translateZ(0); }
-  to { transform: rotateX(55deg) rotateZ(420deg) translateZ(0); }
-}
-
-@keyframes swirl3 {
-  from { transform: rotateX(55deg) rotateZ(120deg) translateZ(30px); }
-  to { transform: rotateX(55deg) rotateZ(480deg) translateZ(30px); }
-}
