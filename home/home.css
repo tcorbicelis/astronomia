@@ -167,8 +167,8 @@ p {
     gap: 12px; /* espaço entre o perfil e o botão */
 }
 
-/* Botão Portal */
-.portal-btn {
+/* Botão GAME */
+.game-btn {
     padding: 10px 16px;
     border-radius: 6px;
     border: 2px solid #4ea8de;
@@ -180,7 +180,7 @@ p {
     transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-.portal-btn:hover {
+.game-btn:hover {
     background: #4ea8de;
     transform: scale(1.05);
     box-shadow: 0 0 10px #4ea8de;
