@@ -157,6 +157,12 @@ function shootBullet() {
           score += 10;
           scoreBoard.innerText = `Pontos: ${score}`;
 
+          // ✅ verifica vitória
+          if (score >= 1000) {
+          alert('🏆 Parabéns! Você venceu ao chegar a 1000 pontos!');
+          location.reload(); // ou chame uma função winGame()
+          }
+
           meteor.remove();
         }
       });
@@ -217,3 +223,8 @@ setInterval(() => {
     }
   }, 16);
 }, 1000);
+
+function winGame() {
+  alert('🏆 Parabéns! Você chegou a 1000 pontos!');
+  location.reload(); // reinicia o jogo
+}
