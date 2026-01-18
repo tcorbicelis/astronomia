@@ -528,3 +528,52 @@ button:hover {
     text-shadow: 0 0 6px rgba(78,168,222,0.6);
     max-width: 120px;
 }
+
+/* ===========================
+   FOOTER
+=========================== */
+.site-footer {
+    width: 100%;
+    margin-top: 60px;
+    padding: 30px 20px;
+    text-align: center;
+    background: linear-gradient(to top, #020617, transparent);
+    border-top: 1px solid rgba(78,168,222,0.3);
+}
+
+.footer-name {
+    color: #cfe9ff;
+    font-size: 14px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.footer-name span {
+    color: #4ea8de;
+    font-weight: bold;
+    text-shadow: 0 0 6px #4ea8de;
+}
+
+.footer-instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(78,168,222,0.4);
+    transition: all 0.3s ease;
+}
+
+.footer-instagram img {
+    width: 20px;
+    height: 20px;
+}
+
+.footer-instagram:hover {
+    background: rgba(78,168,222,0.2);
+    box-shadow: 0 0 12px rgba(78,168,222,0.6);
+    transform: scale(1.05);
+}
