@@ -72,7 +72,7 @@ registerTab.addEventListener('click', () => {
         }, 50);
     });
 
-// ⭐ Chat Online
+// ⭐ Chat
 const chatContainer = document.getElementById('chatContainer');
 const chatHeader = document.getElementById('chatHeader');
 const chatBody = document.getElementById('chatBody');
