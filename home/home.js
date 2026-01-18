@@ -102,7 +102,7 @@ function sendMessage() {
     setTimeout(() => {
         const botMsg = document.createElement('div');
         botMsg.classList.add('message', 'bot');
-        botMsg.textContent = "Ainda estou aprendendo a responder. 😉";
+        botMsg.textContent = "Ainda estou em desenvolvimento. 😉";
         messages.appendChild(botMsg);
         messages.scrollTop = messages.scrollHeight;
     }, 700);
