@@ -71,3 +71,45 @@ registerTab.addEventListener('click', () => {
             input.value = '';
         }, 50);
     });
+
+// ⭐ Chat Online
+const chatContainer = document.getElementById('chatContainer');
+const chatHeader = document.getElementById('chatHeader');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const messages = document.getElementById('messages');
+
+// Abrir/fechar chat
+chatHeader.addEventListener('click', () => {
+    chatBody.style.display = chatBody.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Enviar mensagem
+function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    // Mensagem do usuário
+    const userMsg = document.createElement('div');
+    userMsg.classList.add('message', 'user');
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    chatInput.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Resposta automática (exemplo)
+    setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.classList.add('message', 'bot');
+        botMsg.textContent = "Ainda estou aprendendo a responder. 😉";
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 700);
+}
+
+// Enviar ao clicar no botão ou pressionar Enter
+sendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendMessage();
+});
