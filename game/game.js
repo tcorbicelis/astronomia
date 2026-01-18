@@ -38,6 +38,7 @@ const ship = (() => {
 
 // 💯 Pontuação
 let score = 0;
+let doubleShot = false; // 🔥 ativa tiro duplo aos 500 pontos
 const scoreBoard = document.createElement('div');
 scoreBoard.className = 'score';
 scoreBoard.innerText = 'Pontos: 0';
@@ -112,39 +113,57 @@ function shootBullet() {
   shootSound.currentTime = 0;
   shootSound.play();
 
-  const bullet = document.createElement('div');
-  bullet.className = 'bullet';
   const rect = ship.getBoundingClientRect();
-  bullet.style.left = rect.left + rect.width / 2 - 2 + 'px';
-  bullet.style.top = rect.top + 'px';
-  game.appendChild(bullet);
 
-  const interval = setInterval(() => {
-    bullet.style.top = bullet.offsetTop - 10 + 'px';
-    if (bullet.offsetTop < 0) {
-      bullet.remove();
-      clearInterval(interval);
-    }
+  // 🔥 Define se atira 1 ou 2 tiros
+  const bulletsX = (score >= 450)
+    ? [
+        rect.left + rect.width * 0.3,
+        rect.left + rect.width * 0.7
+      ]
+    : [
+        rect.left + rect.width / 2
+      ];
 
-    document.querySelectorAll('.meteor').forEach(meteor => {
-      if (isColliding(bullet, meteor)) {
+  bulletsX.forEach(x => {
+    const bullet = document.createElement('div');
+    bullet.className = 'bullet';
+    bullet.style.left = x - 2 + 'px';
+    bullet.style.top = rect.top + 'px';
+    game.appendChild(bullet);
+
+    const interval = setInterval(() => {
+      bullet.style.top = bullet.offsetTop - 10 + 'px';
+
+      if (bullet.offsetTop < 0) {
         bullet.remove();
         clearInterval(interval);
-
-        const r = meteor.getBoundingClientRect();
-        createExplosion(r.left + r.width / 2, r.top + r.height / 2);
-        explosionSound.currentTime = 0;
-        explosionSound.play();
-
-        score += 10;
-        scoreBoard.innerText = `Pontos: ${score}`;
-
-        meteor.remove();
       }
-    });
-  }, 16);
 
-  setTimeout(() => { canShoot = true; }, 250); // 4 tiros por segundo
+      document.querySelectorAll('.meteor').forEach(meteor => {
+        if (isColliding(bullet, meteor)) {
+          bullet.remove();
+          clearInterval(interval);
+
+          const r = meteor.getBoundingClientRect();
+          createExplosion(
+            r.left + r.width / 2,
+            r.top + r.height / 2
+          );
+
+          explosionSound.currentTime = 0;
+          explosionSound.play();
+
+          score += 10;
+          scoreBoard.innerText = `Pontos: ${score}`;
+
+          meteor.remove();
+        }
+      });
+    }, 16);
+  });
+
+  setTimeout(() => { canShoot = true; }, 250);
 }
 
 // 🔄 Atualiza posição da nave e atira
