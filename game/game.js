@@ -119,7 +119,7 @@ function shootBullet() {
   const rect = ship.getBoundingClientRect();
 
   // 🔥 Tiro simples ou duplo
-  const bulletsX = (score >= 450)
+  const bulletsX = (score >= 300)
     ? [rect.left + rect.width * 0.3, rect.left + rect.width * 0.7]
     : [rect.left + rect.width / 2];
 
@@ -155,7 +155,8 @@ function shootBullet() {
           explosionSound.currentTime = 0;
           explosionSound.play();
 
-          score += 10;
+          const points = Number(meteor.dataset.points);
+          score += points;
           scoreBoard.innerText = `Pontos: ${score}`;
 
           if (score >= 1000) { // Vitória
@@ -203,19 +204,43 @@ updateShip();
 
 // ☄️ Criar meteoros
 setInterval(() => {
-  if (gameFinished) return; // ❌ não cria meteoros se jogo acabou
+  if (gameFinished) return;
 
   const meteor = document.createElement('div');
   meteor.className = 'meteor';
-  meteor.style.left = Math.random() * (window.innerWidth - 40) + 'px';
-  meteor.style.top = '-40px';
+
+  // 🎲 Sorteio do tipo de meteoro
+  const isSmall = Math.random() < 0.35; // 35% chance de meteoro pequeno
+
+  let size;
+  let points;
+  let speed;
+
+  if (isSmall) {
+    size = 25;      // meteoro pequeno
+    points = 10;    // vale mais pontos
+    speed = Math.random() * 3 + 4; // mais rápido
+    meteor.classList.add('small');
+  } else {
+    size = 40;      // meteoro padrão
+    points = 5;     // menos pontos
+    speed = Math.random() * 2 + 2;
+  }
+
+  meteor.style.width = size + 'px';
+  meteor.style.height = size + 'px';
+  meteor.style.left = Math.random() * (window.innerWidth - size) + 'px';
+  meteor.style.top = -size + 'px';
+
+  // 📌 guarda os pontos do meteoro
+  meteor.dataset.points = points;
+
   game.appendChild(meteor);
 
-  const speed = Math.random() * 3 + 2;
   const fall = setInterval(() => {
     if (gameFinished) {
       clearInterval(fall);
-      if (meteor.parentElement) meteor.remove();
+      meteor.remove();
       return;
     }
 

@@ -182,3 +182,7 @@ button:hover {
     opacity: 1;
   }
 }
+
+.meteor.small {
+  filter: brightness(1.3);
+}
