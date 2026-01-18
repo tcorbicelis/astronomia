@@ -26,7 +26,7 @@ document.body.appendChild(game);
 // 🚀 Nave
 const ship = (() => {
   const s = document.createElement('img');
-  s.src = 'img/nave.png'; // caminho da imagem
+  s.src = 'img/nave.png';
   s.className = 'ship';
   s.style.position = 'absolute';
   s.style.bottom = '20px';
@@ -38,10 +38,11 @@ const ship = (() => {
 
 // 💯 Pontuação
 let score = 0;
-let speedMultiplier = 1; // 🔥 multiplicador de velocidade dos meteoros
-let doubleShot = false; // 🔥 ativa tiro duplo aos 500 pontos
-let gameFinished = false; // 🛑 controle de fim de jogo
+let speedMultiplier = 1;
+let doubleShot = false;
+let gameFinished = false;
 let difficultyIncreased = false;
+let bossSpawned = false;
 
 const scoreBoard = document.createElement('div');
 scoreBoard.className = 'score';
@@ -58,13 +59,13 @@ timerBoard.innerText = 'Tempo: 0s';
 document.body.appendChild(timerBoard);
 
 function updateTimer() {
-  if (gameFinished) return; // parar cronômetro após fim do jogo
-  const elapsed = Math.floor((Date.now() - startTime) / 1000); // tempo em segundos
+  if (gameFinished) return;
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
   timerBoard.innerText = `Tempo: ${elapsed}s`;
   requestAnimationFrame(updateTimer);
 }
 
-updateTimer(); // iniciar o cronômetro
+updateTimer();
 
 // 📌 Função de colisão
 function isColliding(a, b) {
@@ -88,7 +89,50 @@ function createExplosion(x, y) {
   setTimeout(() => explosion.remove(), 400);
 }
 
-// 🎮 Controle da nave pelo teclado
+// 🧨 Boss
+function spawnBossMeteor() {
+  if (bossSpawned || gameFinished) return;
+  bossSpawned = true;
+
+  const boss = document.createElement('div');
+  boss.className = 'meteor boss';
+
+  const size = 120;
+  const speed = 1;
+  const life = 30;
+
+  boss.style.width = size + 'px';
+  boss.style.height = size + 'px';
+  boss.style.left = (window.innerWidth / 2 - size / 2) + 'px';
+  boss.style.top = '-140px';
+
+  boss.dataset.life = life;
+  boss.dataset.points = 50;
+
+  game.appendChild(boss);
+
+  const fall = setInterval(() => {
+    if (gameFinished) {
+      clearInterval(fall);
+      boss.remove();
+      return;
+    }
+
+    boss.style.top = boss.offsetTop + speed + 'px';
+
+    if (isColliding(boss, ship)) {
+      showGameOver();
+      clearInterval(fall);
+    }
+
+    if (boss.offsetTop > window.innerHeight) {
+      boss.remove();
+      clearInterval(fall);
+    }
+  }, 16);
+}
+
+// 🎮 Controle da nave
 const keys = {
   ArrowLeft: false,
   ArrowRight: false,
@@ -108,19 +152,17 @@ document.addEventListener('keyup', (e) => {
   if (e.code in keys) keys[e.code] = false;
 });
 
-// 🔫 Função de disparo
+// 🔫 Tiro
 let canShoot = true;
 
 function shootBullet() {
-  if (gameFinished || !canShoot) return; // ❌ não atira se fim de jogo
+  if (gameFinished || !canShoot) return;
   canShoot = false;
 
   shootSound.currentTime = 0;
   shootSound.play();
 
   const rect = ship.getBoundingClientRect();
-
-  // 🔥 Tiro simples ou duplo
   const bulletsX = (score >= 150)
     ? [rect.left + rect.width * 0.3, rect.left + rect.width * 0.7]
     : [rect.left + rect.width / 2];
@@ -133,14 +175,13 @@ function shootBullet() {
     game.appendChild(bullet);
 
     const interval = setInterval(() => {
-      if (gameFinished) { // ❌ para o movimento da bala se jogo acabou
+      if (gameFinished) {
         clearInterval(interval);
         if (bullet.parentElement) bullet.remove();
         return;
       }
 
       bullet.style.top = bullet.offsetTop - 10 + 'px';
-
       if (bullet.offsetTop < 0) {
         bullet.remove();
         clearInterval(interval);
@@ -153,22 +194,37 @@ function shootBullet() {
 
           const r = meteor.getBoundingClientRect();
           createExplosion(r.left + r.width / 2, r.top + r.height / 2);
-
           explosionSound.currentTime = 0;
           explosionSound.play();
 
+          // Boss
+          if (meteor.classList.contains('boss')) {
+            meteor.dataset.life--;
+            if (meteor.dataset.life <= 0) {
+              score += Number(meteor.dataset.points);
+              scoreBoard.innerText = `Pontos: ${score}`;
+              meteor.remove();
+            }
+            return;
+          }
+
+          // Meteoro normal
           const points = Number(meteor.dataset.points);
           score += points;
           scoreBoard.innerText = `Pontos: ${score}`;
 
-        if (score >= 315 && !difficultyIncreased) {
-          speedMultiplier = 1.3; // +30% de velocidade
-          difficultyIncreased = true;
-        }
+          if (score >= 315 && !difficultyIncreased) {
+            speedMultiplier = 1.3;
+            difficultyIncreased = true;
+          }
 
-          if (score >= 1000) { // Vitória
+          if (score >= 550 && !bossSpawned) {
+            spawnBossMeteor();
+          }
+
+          if (score >= 1000) {
             showVictory();
-            return; // ❌ não verifica mais colisões
+            return;
           }
 
           meteor.remove();
@@ -180,14 +236,11 @@ function shootBullet() {
   setTimeout(() => { canShoot = true; }, 250);
 }
 
-// 🔄 Atualiza posição da nave e atira
+// 🔄 Atualiza nave
 function updateShip() {
-  if (gameFinished) return; // ❌ bloqueia movimento
+  if (gameFinished) return;
 
   const speed = 7;
-  const shipWidth = ship.offsetWidth;
-  const shipHeight = ship.offsetHeight;
-
   let left = ship.offsetLeft;
   let top = ship.offsetTop;
 
@@ -196,8 +249,8 @@ function updateShip() {
   if (keys.ArrowUp) top -= speed;
   if (keys.ArrowDown) top += speed;
 
-  left = Math.max(0, Math.min(left, window.innerWidth - shipWidth));
-  top = Math.max(0, Math.min(top, window.innerHeight - shipHeight));
+  left = Math.max(0, Math.min(left, window.innerWidth - ship.offsetWidth));
+  top = Math.max(0, Math.min(top, window.innerHeight - ship.offsetHeight));
 
   ship.style.left = left + 'px';
   ship.style.top = top + 'px';
@@ -216,21 +269,17 @@ setInterval(() => {
   const meteor = document.createElement('div');
   meteor.className = 'meteor';
 
-  // 🎲 Sorteio do tipo de meteoro
-  const isSmall = Math.random() < 0.35; // 35% chance de meteoro pequeno
-
-  let size;
-  let points;
-  let speed;
+  const isSmall = Math.random() < 0.35;
+  let size, points, speed;
 
   if (isSmall) {
-    size = 25;      // meteoro pequeno
-    points = 10;    // vale mais pontos
-    speed = (Math.random() * 3 + 4) * speedMultiplier; // mais rápido
+    size = 25;
+    points = 10;
+    speed = (Math.random() * 3 + 4) * speedMultiplier;
     meteor.classList.add('small');
   } else {
-    size = 40;      // meteoro padrão
-    points = 5;     // menos pontos
+    size = 40;
+    points = 5;
     speed = (Math.random() * 2 + 2) * speedMultiplier;
   }
 
@@ -239,7 +288,6 @@ setInterval(() => {
   meteor.style.left = Math.random() * (window.innerWidth - size) + 'px';
   meteor.style.top = -size + 'px';
 
-  // 📌 guarda os pontos do meteoro
   meteor.dataset.points = points;
 
   game.appendChild(meteor);
@@ -275,9 +323,7 @@ function showGameOver() {
 
   const box = document.createElement('div');
   box.className = 'victory-box';
-
-  box.innerHTML = `
-    <h1>💥 GAME OVER</h1>
+  box.innerHTML = `<h1>💥 GAME OVER</h1>
     <p>Você perdeu! 🚀</p>
     <button onclick="location.reload()">Jogar novamente</button>
   `;
@@ -296,13 +342,11 @@ function showVictory() {
 
   const box = document.createElement('div');
   box.className = 'victory-box';
-
   box.innerHTML = `
     <h1>🏆 VICTORY!</h1>
     <p>Você chegou aos <strong>1000 pontos</strong> 🚀</p>
     <button onclick="location.reload()">Jogar novamente</button>
   `;
-
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 }
