@@ -39,6 +39,8 @@ const ship = (() => {
 // 💯 Pontuação
 let score = 0;
 let doubleShot = false; // 🔥 ativa tiro duplo aos 500 pontos
+let gameFinished = false; // 🛑 controle de fim de jogo
+
 const scoreBoard = document.createElement('div');
 scoreBoard.className = 'score';
 scoreBoard.innerText = 'Pontos: 0';
@@ -47,13 +49,14 @@ document.body.appendChild(scoreBoard);
 // ⏱️ Cronômetro
 let startTime = Date.now();
 const timerBoard = document.createElement('div');
-timerBoard.className = 'score'; // reutilizando a classe, mas podemos posicionar diferente
+timerBoard.className = 'score';
 timerBoard.style.top = '50px';
 timerBoard.style.right = '20px';
 timerBoard.innerText = 'Tempo: 0s';
 document.body.appendChild(timerBoard);
 
 function updateTimer() {
+  if (gameFinished) return; // parar cronômetro após fim do jogo
   const elapsed = Math.floor((Date.now() - startTime) / 1000); // tempo em segundos
   timerBoard.innerText = `Tempo: ${elapsed}s`;
   requestAnimationFrame(updateTimer);
@@ -95,7 +98,7 @@ const keys = {
 document.addEventListener('keydown', (e) => {
   if (e.code in keys) {
     keys[e.code] = true;
-    e.preventDefault(); // evita scroll da página
+    e.preventDefault();
   }
 });
 
@@ -104,10 +107,10 @@ document.addEventListener('keyup', (e) => {
 });
 
 // 🔫 Função de disparo
-let canShoot = true; // controla intervalo de tiros
+let canShoot = true;
 
 function shootBullet() {
-  if (!canShoot) return;
+  if (gameFinished || !canShoot) return; // ❌ não atira se fim de jogo
   canShoot = false;
 
   shootSound.currentTime = 0;
@@ -115,15 +118,10 @@ function shootBullet() {
 
   const rect = ship.getBoundingClientRect();
 
-  // 🔥 Define se atira 1 ou 2 tiros
+  // 🔥 Tiro simples ou duplo
   const bulletsX = (score >= 450)
-    ? [
-        rect.left + rect.width * 0.3,
-        rect.left + rect.width * 0.7
-      ]
-    : [
-        rect.left + rect.width / 2
-      ];
+    ? [rect.left + rect.width * 0.3, rect.left + rect.width * 0.7]
+    : [rect.left + rect.width / 2];
 
   bulletsX.forEach(x => {
     const bullet = document.createElement('div');
@@ -133,6 +131,12 @@ function shootBullet() {
     game.appendChild(bullet);
 
     const interval = setInterval(() => {
+      if (gameFinished) { // ❌ para o movimento da bala se jogo acabou
+        clearInterval(interval);
+        if (bullet.parentElement) bullet.remove();
+        return;
+      }
+
       bullet.style.top = bullet.offsetTop - 10 + 'px';
 
       if (bullet.offsetTop < 0) {
@@ -146,10 +150,7 @@ function shootBullet() {
           clearInterval(interval);
 
           const r = meteor.getBoundingClientRect();
-          createExplosion(
-            r.left + r.width / 2,
-            r.top + r.height / 2
-          );
+          createExplosion(r.left + r.width / 2, r.top + r.height / 2);
 
           explosionSound.currentTime = 0;
           explosionSound.play();
@@ -157,10 +158,9 @@ function shootBullet() {
           score += 10;
           scoreBoard.innerText = `Pontos: ${score}`;
 
-          // ✅ verifica vitória
-          if (score >= 1000) {
-          alert('🏆 Parabéns! Você venceu ao chegar a 1000 pontos!');
-          location.reload(); // ou chame uma função winGame()
+          if (score >= 1000) { // Vitória
+            showVictory();
+            return; // ❌ não verifica mais colisões
           }
 
           meteor.remove();
@@ -174,6 +174,8 @@ function shootBullet() {
 
 // 🔄 Atualiza posição da nave e atira
 function updateShip() {
+  if (gameFinished) return; // ❌ bloqueia movimento
+
   const speed = 7;
   const shipWidth = ship.offsetWidth;
   const shipHeight = ship.offsetHeight;
@@ -186,7 +188,6 @@ function updateShip() {
   if (keys.ArrowUp) top -= speed;
   if (keys.ArrowDown) top += speed;
 
-  // Limites da tela
   left = Math.max(0, Math.min(left, window.innerWidth - shipWidth));
   top = Math.max(0, Math.min(top, window.innerHeight - shipHeight));
 
@@ -202,6 +203,8 @@ updateShip();
 
 // ☄️ Criar meteoros
 setInterval(() => {
+  if (gameFinished) return; // ❌ não cria meteoros se jogo acabou
+
   const meteor = document.createElement('div');
   meteor.className = 'meteor';
   meteor.style.left = Math.random() * (window.innerWidth - 40) + 'px';
@@ -210,6 +213,12 @@ setInterval(() => {
 
   const speed = Math.random() * 3 + 2;
   const fall = setInterval(() => {
+    if (gameFinished) {
+      clearInterval(fall);
+      if (meteor.parentElement) meteor.remove();
+      return;
+    }
+
     meteor.style.top = meteor.offsetTop + speed + 'px';
 
     if (meteor.offsetTop > window.innerHeight) {
@@ -218,13 +227,50 @@ setInterval(() => {
     }
 
     if (isColliding(meteor, ship)) {
-      alert('💥 Game Over');
-      location.reload();
+      showGameOver();
+      clearInterval(fall);
     }
   }, 16);
 }, 1000);
 
-function winGame() {
-  alert('🏆 Parabéns! Você chegou a 1000 pontos!');
-  location.reload(); // reinicia o jogo
+// 💥 Game Over
+function showGameOver() {
+  if (gameFinished) return;
+  gameFinished = true;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'victory-overlay';
+
+  const box = document.createElement('div');
+  box.className = 'victory-box';
+
+  box.innerHTML = `
+    <h1>💥 GAME OVER</h1>
+    <p>Você perdeu! 🚀</p>
+    <button onclick="location.reload()">Jogar novamente</button>
+  `;
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+}
+
+// 🏆 Vitória
+function showVictory() {
+  if (gameFinished) return;
+  gameFinished = true;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'victory-overlay';
+
+  const box = document.createElement('div');
+  box.className = 'victory-box';
+
+  box.innerHTML = `
+    <h1>🏆 VICTORY!</h1>
+    <p>Você chegou aos <strong>1000 pontos</strong> 🚀</p>
+    <button onclick="location.reload()">Jogar novamente</button>
+  `;
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
 }

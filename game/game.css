@@ -141,3 +141,44 @@ button:hover {
   z-index: 10;
 }
 
+.victory-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.victory-box {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  border: 2px solid #4ea8de;
+  border-radius: 12px;
+  padding: 30px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 25px #4ea8de;
+  animation: pop 0.4s ease-out;
+}
+
+.victory-box h1 {
+  margin-bottom: 15px;
+  color: #ffeb3b;
+}
+
+.victory-box button {
+  position: static;
+  margin-top: 20px;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
