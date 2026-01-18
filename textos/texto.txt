@@ -1,6 +1,0 @@
-> Este projeto tem a intenção de ser um portifólio.
-Nele pretendo demonstrar minhas habilidades e um pouco de minha essência. 
-
-> Também estou usando-o para estudar, aprender novas coisas e cada vez mais melhorando. 
-Tenho usado muito o HTML, CSS e JavaScript, mas com o tempo pretendo começar a usar o Python, SQL, PHP, React, dentre outros.
-Resumindo, tenho investido no Front-end primeiro para depois começar o Back-end deste projeto. 

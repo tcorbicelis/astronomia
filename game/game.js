@@ -38,8 +38,10 @@ const ship = (() => {
 
 // 💯 Pontuação
 let score = 0;
+let speedMultiplier = 1; // 🔥 multiplicador de velocidade dos meteoros
 let doubleShot = false; // 🔥 ativa tiro duplo aos 500 pontos
 let gameFinished = false; // 🛑 controle de fim de jogo
+let difficultyIncreased = false;
 
 const scoreBoard = document.createElement('div');
 scoreBoard.className = 'score';
@@ -119,7 +121,7 @@ function shootBullet() {
   const rect = ship.getBoundingClientRect();
 
   // 🔥 Tiro simples ou duplo
-  const bulletsX = (score >= 300)
+  const bulletsX = (score >= 150)
     ? [rect.left + rect.width * 0.3, rect.left + rect.width * 0.7]
     : [rect.left + rect.width / 2];
 
@@ -158,6 +160,11 @@ function shootBullet() {
           const points = Number(meteor.dataset.points);
           score += points;
           scoreBoard.innerText = `Pontos: ${score}`;
+
+        if (score >= 315 && !difficultyIncreased) {
+          speedMultiplier = 1.3; // +30% de velocidade
+          difficultyIncreased = true;
+        }
 
           if (score >= 1000) { // Vitória
             showVictory();
@@ -219,12 +226,12 @@ setInterval(() => {
   if (isSmall) {
     size = 25;      // meteoro pequeno
     points = 10;    // vale mais pontos
-    speed = Math.random() * 3 + 4; // mais rápido
+    speed = (Math.random() * 3 + 4) * speedMultiplier; // mais rápido
     meteor.classList.add('small');
   } else {
     size = 40;      // meteoro padrão
     points = 5;     // menos pontos
-    speed = Math.random() * 2 + 2;
+    speed = (Math.random() * 2 + 2) * speedMultiplier;
   }
 
   meteor.style.width = size + 'px';

@@ -1,0 +1,17 @@
+Este código será para atualização da skin da nave.
+
+.ship {
+  background-image: url('https://toppng.com/uploads/preview/spaceship-png-PNG-free-PNG-Images_121858.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+===============================================================================================
+
+Este código para ajuste de tamanho caso a imagem fique muito grande, ou pequena.
+
+.ship {
+  width: 60px;
+  height: 60px;
+}
+
