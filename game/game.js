@@ -97,9 +97,9 @@ function spawnBossMeteor() {
   const boss = document.createElement('div');
   boss.className = 'meteor boss';
 
-  const size = 120;
+  const size = 390;
   const speed = 1;
-  const life = 30;
+  const life = 65;
 
   boss.style.width = size + 'px';
   boss.style.height = size + 'px';
@@ -107,7 +107,7 @@ function spawnBossMeteor() {
   boss.style.top = '-140px';
 
   boss.dataset.life = life;
-  boss.dataset.points = 50;
+  boss.dataset.points = 100;
 
   game.appendChild(boss);
 
