@@ -25,13 +25,17 @@ document.body.appendChild(game);
 
 // 🚀 Nave
 const ship = (() => {
-  const s = document.createElement('img');
-  s.src = 'img/nave.png';
+  const s = document.createElement('div');
   s.className = 'ship';
   s.style.position = 'absolute';
-  s.style.bottom = '20px';
+  s.style.bottom = '40px';
   s.style.left = '50%';
   s.style.transform = 'translateX(-50%)';
+
+  const engine = document.createElement('div');
+  engine.className = 'engine';
+  s.appendChild(engine);
+
   game.appendChild(s);
   return s;
 })();
